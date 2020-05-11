@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/styles.css">
 
     <!-- FONT IMPORT -->
-    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;600&display=swap" rel="stylesheet">
 
     <!-- FONT AWESOME -->
     <script src="https://kit.fontawesome.com/201f764948.js" crossorigin="anonymous"></script>
@@ -17,25 +17,136 @@
   <body>
     <div class="container clearfix">
       <!-- Player 1 (0) -->
-      <div class="player-0-panel active">
+      <div class="player-0-panel">
         <div class="player-name" id="name-0">Player 1</div>
         <!-- Player 1 (0) Roll -->
-        <button class="btn" id="btn-roll-0"><i class="fas fa-dice-d6"></i> Roll Dice</button>
+        <button class="btn btn-roll" id="btn-roll-0"><i class="fas fa-dice-d6"></i> Roll Dice</button>
 
         <div class="score-info">
-          <div class="score-category">
-            <button class="btn">Ones</button><p class="ones-score">0</p>
-              </p>
+          <div class="score-left">
+            <div class="score-category">
+              <button class="btn btn-score used">Ones</button>
+              <div class="score-num ones-score-0">0</div>
+            </div>
+            <div class="score-category">
+              <button class="btn btn-score">Twos</button>
+              <div class="score-num twos-score-0">0</div>
+            </div>
+            <div class="score-category">
+              <button class="btn btn-score">Threes</button>
+              <div class="score-num threes-score-0">0</div>
+            </div>
+            <div class="score-category">
+              <button class="btn btn-score">Fours</button>
+              <div class="score-num fours-score-0">0</div>
+            </div>
+            <div class="score-category">
+              <button class="btn btn-score">Fives</button>
+              <div class="score-num fives-score-0">0</div>
+            </div>
+            <div class="score-category">
+              <button class="btn btn-score">Sixes</button>
+              <div class="score-num sixes-score-0">0</div>
+            </div>
+
+          </div>
+          <div class="score-right">
+            <div class="score-category">
+              <button class="btn btn-score">3 of a K</button>
+              <div class="score-num toak-score-0">0</div>
+            </div>
+            <div class="score-category">
+              <button class="btn btn-score">4 of a K</button>
+              <div class="score-num foak-score-0">0</div>
+            </div>
+            <div class="score-category">
+              <button class="btn btn-score">F House</button>
+              <div class="score-num fullhouse-score-0">0</div>
+            </div>
+            <div class="score-category">
+              <button class="btn btn-score">Sm Str</button>
+              <div class="score-num ss-score-0">0</div>
+            </div>
+            <div class="score-category">
+              <button class="btn btn-score">Lg Str</button>
+              <div class="score-num ls-score-0">0</div>
+            </div>
+            <div class="score-category">
+              <button class="btn btn-score">Yahtzee</button>
+              <div class="score-num yahtzee-score-0">0</div>
+            </div>
+            <div class="score-category">
+              <button class="btn btn-score">Chance</button>
+              <div class="score-num chance-score-0">0</div>
+            </div>
           </div>
         </div>
-
       </div>
         <!-- Player 2 (1) -->
-      <div class="player-1-panel">
+      <div class="player-1-panel active">
         <div class="player-name" id="name-1">Player 2</div>
 
         <!-- Player 2 (1) Roll -->
-        <button class="btn" id="btn-roll-1"><i class="fas fa-dice-d6"></i> Roll Dice</button>
+        <button class="btn btn-roll" id="btn-roll-1"><i class="fas fa-dice-d6"></i> Roll Dice</button>
+        <div class="score-info">
+          <div class="score-left">
+            <div class="score-category">
+              <button class="btn btn-score">Ones</button>
+              <div class="score-num ones-score-1">0</div>
+            </div>
+            <div class="score-category">
+              <button class="btn btn-score">Twos</button>
+              <div class="score-num twos-score-1">0</div>
+            </div>
+            <div class="score-category">
+              <button class="btn btn-score">Threes</button>
+              <div class="score-num threes-score-1">0</div>
+            </div>
+            <div class="score-category">
+              <button class="btn btn-score">Fours</button>
+              <div class="score-num fours-score-1">0</div>
+            </div>
+            <div class="score-category">
+              <button class="btn btn-score">Fives</button>
+              <div class="score-num fives-score-1">0</div>
+            </div>
+            <div class="score-category">
+              <button class="btn btn-score">Sixes</button>
+              <div class="score-num sixes-score-1">0</div>
+            </div>
+
+          </div>
+          <div class="score-right">
+            <div class="score-category">
+              <button class="btn btn-score">3 of a K</button>
+              <div class="score-num toak-score-1">0</div>
+            </div>
+            <div class="score-category">
+              <button class="btn btn-score">4 of a K</button>
+              <div class="score-num foak-score-1">0</div>
+            </div>
+            <div class="score-category">
+              <button class="btn btn-score">F House</button>
+              <div class="score-num fullhouse-score-1">0</div>
+            </div>
+            <div class="score-category">
+              <button class="btn btn-score">Sm Str</button>
+              <div class="score-num ss-score-1">0</div>
+            </div>
+            <div class="score-category">
+              <button class="btn btn-score">Lg Str</button>
+              <div class="score-num ls-score-1">0</div>
+            </div>
+            <div class="score-category">
+              <button class="btn btn-score">Yahtzee</button>
+              <div class="score-num yahtzee-score-1">0</div>
+            </div>
+            <div class="score-category">
+              <button class="btn btn-score">Chance</button>
+              <div class="score-num chance-score-1">0</div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <img src="images/dice-1.png" class="dice dice-1 active-dice" />
@@ -44,6 +155,11 @@
       <img src="images/dice-4.png" class="dice dice-4" />
       <img src="images/dice-5.png" class="dice dice-5" />
       <img src="images/dice-6.png" class="dice dice-6" />
+
+      <button class="btn btn-new"><i class="fas fa-redo-alt"></i> New Game</button>
   </div>
+  <script type="text/javascript" src="js/app.js">
+
+  </script>
   </body>
 </html>

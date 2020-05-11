@@ -119,19 +119,22 @@ border-radius: 5px;
 /* BUTTON STYLES */
 
 .btn {
-  width: 150px;
-  height: 60px;
-  display: block;
-  margin: 50px auto;
   color: #555;
   background: none;
   border: none;
   font-family: 'Josefin Sans', sans-serif;
-  font-size: 20px;
-  text-transform: uppercase;
   cursor: pointer;
   font-weight: 300;
   transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-roll {
+  width: 150px;
+  height: 60px;
+  font-size: 20px;
+  display: block;
+  margin: 30px auto;
+  text-transform: uppercase;
 }
 
 button:hover { font-weight: 600; }
@@ -141,10 +144,66 @@ button:focus {
   outline: none;
 }
 
-.btn-roll-0 {
-
+.btn-score {
+  width: 80px;
+  height: 40px;
+  font-size: 16px;
+  display: inline-block;
+  text-align: center;
 }
 
-.btn-roll-1 {
+.btn-new {
+  width: 150px;
+  height: 60px;
+  font-size: 20px;
+  display: block;
+  margin: 30px auto;
+  text-transform: uppercase;
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+}
 
+.btn-score:not(.used):hover {
+  font-weight: 600;
+}
+
+/* The score option is already used */
+.used {
+  text-decoration: line-through;
+}
+
+.used:hover {
+  font-weight: 300;
+  cursor: not-allowed;
+}
+
+
+/* SCORE STYLES */
+
+.score-info {
+  width: 100%;
+  display: flex;
+  box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.15);
+}
+
+.score-num {
+  display: inline-block;
+  text-align: center;
+  font-size: 16px;
+  width: 30%;
+}
+
+.score-left {
+  width: 50%;
+}
+
+.score-right {
+  width: 50%;
+}
+
+.score-category {
+width: 100%;
+padding: 0;
 }
