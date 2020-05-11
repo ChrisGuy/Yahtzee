@@ -1,4 +1,4 @@
-let activePlayer, scores, dice, rollCount, finalDice, tempDice, chanceScore;
+let activePlayer, scores, dice, rollCount, finalDice, tempDice, chanceScore, globalCounter;
 
 
 initGame();
@@ -105,8 +105,15 @@ function initGame() {
       "chance-score-1": ""
     }
   ];
+
+  // Detects end of turn
   rollCount = 0;
+
+  // Sets initial dice line up
   dice = [0, 1, 2, 3, 4, 5];
+
+  // Detects End of game
+  globalCounter = 0;
 
   hideDice();
   removeUsed();
@@ -123,6 +130,7 @@ function initGame() {
 
 };
 
+// Remove strikethrough on score card
 function removeUsed() {
   let elems = document.querySelectorAll(".btn-score");
   [].forEach.call(elems, function(el) {
@@ -130,6 +138,7 @@ function removeUsed() {
   });
 };
 
+// Removes styling to selected dice
 function removeActiveDice() {
   let elems = document.querySelectorAll(".dice");
   [].forEach.call(elems, function(el) {
@@ -137,6 +146,7 @@ function removeActiveDice() {
   });
 };
 
+// Toggles between P1 (0) & P2 (1)
 function toggleActive() {
   activePlayer = activePlayer ? 0 : 1;
   document.querySelector(".player-0-panel").classList.toggle("active");
@@ -158,29 +168,17 @@ function toggleActive() {
     document.querySelector(".btn-roll-1").innerHTML = "<i class=\"fas fa-dice-d6\"></i> Roll Dice";
   }
 
+  // Resets the turns
   rollCount = 0;
-
+  // Reset Dice
   removeActiveDice();
 
 };
 
 function calcScore() {
-  ones(dice);
-  twos(dice);
-  threes(dice);
-  fours(dice);
-  fives(dice);
-  sixes(dice);
-  threeOfAKind(dice);
-  fourOfAKind(dice);
-  yahtzee(dice);
-  fullhouse(dice);
-  smStraight(dice);
-  lgStraight(dice);
-  chance(dice);
-
+  
   // ONES
-  function ones(dice) {
+  (function ones(dice) {
     let onesScore = dice.filter(num => num === 1);
     if (scores[activePlayer]["ones-score-" + activePlayer] === "") {
       if (onesScore.length === 0) {
@@ -191,10 +189,10 @@ function calcScore() {
     } else {
       document.querySelector(".ones-score-" + activePlayer).textContent = scores[activePlayer]["ones-score-" + activePlayer];
     }
-  };
+  })(dice);
 
   // TWOS
-  function twos(dice) {
+  (function twos(dice) {
     let twosScore = dice.filter(num => num === 2);
     if (scores[activePlayer]["twos-score-" + activePlayer] === "") {
       if (twosScore.length === 0) {
@@ -205,10 +203,10 @@ function calcScore() {
     } else {
       document.querySelector(".twos-score-" + activePlayer).textContent = scores[activePlayer]["twos-score-" + activePlayer];
     }
-  };
+  })(dice);
 
   // THREES
-  function threes(dice) {
+  (function threes(dice) {
     let threesScore = dice.filter(num => num === 3);
     if (scores[activePlayer]["threes-score-" + activePlayer] === "") {
       if (threesScore.length === 0) {
@@ -219,10 +217,10 @@ function calcScore() {
     } else {
       document.querySelector(".threes-score-" + activePlayer).textContent = scores[activePlayer]["threes-score-" + activePlayer];
     }
-  };
+  })(dice);
 
   // FOURS
-  function fours(dice) {
+  (function fours(dice) {
     let foursScore = dice.filter(num => num === 4);
     if (scores[activePlayer]["fours-score-" + activePlayer] === "") {
       if (foursScore.length === 0) {
@@ -233,10 +231,10 @@ function calcScore() {
     } else {
       document.querySelector(".fours-score-" + activePlayer).textContent = scores[activePlayer]["fours-score-" + activePlayer];
     }
-  };
+  })(dice);
 
   // FIVES
-  function fives(dice) {
+  (function fives(dice) {
     let fivesScore = dice.filter(num => num === 5);
     if (scores[activePlayer]["fives-score-" + activePlayer] === "") {
       if (fivesScore.length === 0) {
@@ -247,10 +245,10 @@ function calcScore() {
     } else {
       document.querySelector(".fives-score-" + activePlayer).textContent = scores[activePlayer]["fives-score-" + activePlayer];
     }
-  };
+  })(dice);
 
   // SIXES
-  function sixes(dice) {
+  (function sixes(dice) {
     let sixesScore = dice.filter(num => num === 6);
     if (scores[activePlayer]["sixes-score-" + activePlayer] === "") {
       if (sixesScore.length === 0) {
@@ -261,12 +259,10 @@ function calcScore() {
     } else {
       document.querySelector(".sixes-score-" + activePlayer).textContent = scores[activePlayer]["sixes-score-" + activePlayer];
     }
-  };
-
-
+  })(dice);
 
   // SMALL STRAIGHT
-  function smStraight(dice) {
+  (function smStraight(dice) {
 
     let copy = dice.slice(0);
 
@@ -285,10 +281,10 @@ function calcScore() {
         document.querySelector(".ss-score-" + activePlayer).textContent = "0";
       }
     }
-  };
+  })(dice);
 
   // LARGE STRAIGHT
-  function lgStraight(dice) {
+  (function lgStraight(dice) {
 
     let copy = dice.slice(0);
 
@@ -307,11 +303,11 @@ function calcScore() {
         document.querySelector(".ls-score-" + activePlayer).textContent = "0";
       }
     }
-  };
+  })(dice);
 
 
   // THREE OF A KIND
-  function threeOfAKind(dice) {
+  (function threeOfAKind(dice) {
 
     let toak = [];
     // make a copy of the input array
@@ -346,10 +342,10 @@ function calcScore() {
       }
     }
 
-  };
+  })(dice);
 
   // FOUR OF A KIND
-  function fourOfAKind(dice) {
+  (function fourOfAKind(dice) {
 
     let foak = [];
     // make a copy of the input array
@@ -384,10 +380,10 @@ function calcScore() {
       }
     }
 
-  };
+  })(dice);
 
   // FULLHOUSE
-  function fullhouse(dice) {
+  (function fullhouse(dice) {
 
     let fullhouse = [];
     // make a copy of the input array
@@ -429,11 +425,11 @@ function calcScore() {
         document.querySelector(".fullhouse-score-" + activePlayer).textContent = "0"
       }
     }
-  };
+  })(dice);
 
 
   // YAHTZEE
-  function yahtzee(dice) {
+  (function yahtzee(dice) {
 
     let yahtzee = [];
     // make a copy of the dice array
@@ -473,17 +469,17 @@ function calcScore() {
       document.querySelector(".yahtzee-score-" + activePlayer).textContent = "0";
     }
   }
-};
+})(dice);
 
 
 // CHANCE
-function chance(dice) {
+(function chance(dice) {
   if (scores[activePlayer]["chance-score-" + activePlayer]) {
     document.querySelector(".chance-score-" + activePlayer).textContent = scores[activePlayer]["chance-score-" + activePlayer];
   } else {
     document.querySelector(".chance-score-" + activePlayer).textContent = dice.reduce(reduce);
   };
-};
+})(dice);
 
 
 function reduce(a, b) {
@@ -498,6 +494,10 @@ function saveScore(e) {
   console.log(scores[activePlayer][e.target.name]);
   hideDice();
   clearTempScores();
+  globalCounter++;
+  if (globalCounter === 26){
+    gameOver();
+  }
 };
 
 // Clear temporary scores from player card at end of return
@@ -543,4 +543,8 @@ function clearTempScores() {
   if (scores[activePlayer]["chance-score-" + aP] === "") {
     document.querySelector(".chance-score-" + aP).textContent = "0";
   };
+}
+
+function gameOver() {
+  console.log("End of Game!");
 }
