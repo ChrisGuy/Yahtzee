@@ -96,28 +96,24 @@ border: 3px solid #ffbaba;
 border-radius: 5px;
 }
 
-.dice-0 {
-  top: 70px;
-}
-
 .dice-1 {
-  top: 150px;
+  top: 110px;
 }
 
 .dice-2 {
-  top: 230px;
+  top: 190px;
 }
 
 .dice-3 {
-  top: 310px;
+  top: 270px;
 }
 
 .dice-4 {
-  top: 390px;
+  top: 350px;
 }
 
 .dice-5 {
-  top: 470px;
+  top: 430px;
 }
 
 /* BUTTON STYLES */
