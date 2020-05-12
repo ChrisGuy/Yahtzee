@@ -43,7 +43,7 @@ body {
     width: 50%;
     float: left;
     height: 600px;
-    padding: 100px;
+    padding: 50px 100px;
 }
 
 .player-name {
@@ -160,7 +160,7 @@ button:focus {
   margin: 30px auto;
   text-transform: uppercase;
   position: absolute;
-  top: -18px;
+  bottom: -18px;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -185,7 +185,7 @@ button:focus {
 .score-info {
   width: 100%;
   display: flex;
-  box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 10px 50px rgba(194, 21, 47, 0.25);
 }
 
 .score-num {
