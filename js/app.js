@@ -1,4 +1,4 @@
-let activePlayer, scores, dice, rollCount, finalDice, tempDice, chanceScore, globalCounter;
+let activePlayer, scores, dice, rollCount, finalDice, tempDice, chanceScore, globalCounter, p1Score;
 
 
 initGame();
@@ -58,6 +58,8 @@ function showDice() {
   document.querySelector(".dice-5").classList.remove("hidden");
 }
 
+function hideRollBtns() {}
+
 function diceRoll() {
   for (let i = 1; i < 6; i++) {
     if (document.querySelector(".dice-" + i).classList.contains("active-dice")) {
@@ -74,6 +76,7 @@ function diceRoll() {
 
 function initGame() {
   activePlayer = 0;
+  p1Score = 0;
   scores = [{
       "ones-score-0": "",
       "twos-score-0": "",
@@ -128,6 +131,10 @@ function initGame() {
   // Hide P2 (1) Roll button
   document.querySelector(".btn-roll-1").classList.add("hidden");
 
+  // Disable p2 (1) scorecard for first turn
+  document.querySelectorAll(".btn-1").forEach(btn => {
+    btn.disabled = true;
+  });
 };
 
 // Remove strikethrough on score card
@@ -159,6 +166,12 @@ function toggleActive() {
     document.querySelector(".btn-roll-0").disabled = false;
     document.querySelector(".btn-roll-0").innerHTML = "<i class=\"fas fa-dice-d6\"></i> Roll Dice";
     document.querySelector(".btn-roll-1").innerHTML = "<i class=\"fas fa-dice-d6\"></i> Roll Dice";
+    document.querySelectorAll(".btn-1").forEach(btn => {
+      btn.disabled = true;
+    });
+    document.querySelectorAll(".btn-0").forEach(btn => {
+      btn.disabled = false;
+    });
   } else {
     document.querySelector(".btn-roll-0").classList.add("hidden");
     document.querySelector(".btn-roll-1").classList.remove("hidden");
@@ -166,7 +179,13 @@ function toggleActive() {
     document.querySelector(".btn-roll-1").disabled = false;
     document.querySelector(".btn-roll-0").innerHTML = "<i class=\"fas fa-dice-d6\"></i> Roll Dice";
     document.querySelector(".btn-roll-1").innerHTML = "<i class=\"fas fa-dice-d6\"></i> Roll Dice";
-  }
+    document.querySelectorAll(".btn-0").forEach(btn => {
+      btn.disabled = true;
+    });
+    document.querySelectorAll(".btn-1").forEach(btn => {
+      btn.disabled = false;
+  });
+};
 
   // Resets the turns
   rollCount = 0;
@@ -176,7 +195,7 @@ function toggleActive() {
 };
 
 function calcScore() {
-  
+
   // ONES
   (function ones(dice) {
     let onesScore = dice.filter(num => num === 1);
@@ -463,28 +482,28 @@ function calcScore() {
         document.querySelector(".yahtzee-score-" + activePlayer).textContent = "0";
       }
     } else {
-    if (scores[activePlayer]["yahtzee-score-" + activePlayer]) {
-      document.querySelector(".yahtzee-score-" + activePlayer).textContent = scores[activePlayer]["yahtzee-score-" + activePlayer];
-    } else {
-      document.querySelector(".yahtzee-score-" + activePlayer).textContent = "0";
+      if (scores[activePlayer]["yahtzee-score-" + activePlayer]) {
+        document.querySelector(".yahtzee-score-" + activePlayer).textContent = scores[activePlayer]["yahtzee-score-" + activePlayer];
+      } else {
+        document.querySelector(".yahtzee-score-" + activePlayer).textContent = "0";
+      }
     }
+  })(dice);
+
+
+  // CHANCE
+  (function chance(dice) {
+    if (scores[activePlayer]["chance-score-" + activePlayer]) {
+      document.querySelector(".chance-score-" + activePlayer).textContent = scores[activePlayer]["chance-score-" + activePlayer];
+    } else {
+      document.querySelector(".chance-score-" + activePlayer).textContent = dice.reduce(reduce);
+    };
+  })(dice);
+
+
+  function reduce(a, b) {
+    return a + b;
   }
-})(dice);
-
-
-// CHANCE
-(function chance(dice) {
-  if (scores[activePlayer]["chance-score-" + activePlayer]) {
-    document.querySelector(".chance-score-" + activePlayer).textContent = scores[activePlayer]["chance-score-" + activePlayer];
-  } else {
-    document.querySelector(".chance-score-" + activePlayer).textContent = dice.reduce(reduce);
-  };
-})(dice);
-
-
-function reduce(a, b) {
-  return a + b;
-}
 }
 
 function saveScore(e) {
@@ -494,8 +513,9 @@ function saveScore(e) {
   console.log(scores[activePlayer][e.target.name]);
   hideDice();
   clearTempScores();
+  globalScore();
   globalCounter++;
-  if (globalCounter === 26){
+  if (globalCounter === 26) {
     gameOver();
   }
 };
@@ -545,6 +565,15 @@ function clearTempScores() {
   };
 }
 
+function globalScore() {
+  // for (let i = 0; i < scores[0].length; i++) {
+  //   p1Score += scores[0][i];
+  //   return p1Score;
+  // }
+
+}
+
 function gameOver() {
   console.log("End of Game!");
+  document.querySelector(".btn-roll-0").classList.add("hidden");
 }
