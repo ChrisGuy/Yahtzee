@@ -506,7 +506,7 @@ function saveScore(e) {
   clearTempScores();
   globalScore();
   globalCounter++;
-  if (globalCounter === 6) {
+  if (globalCounter === 26) {
     gameOver();
   }
 };
@@ -618,11 +618,14 @@ function globalScore() {
 
 function gameOver() {
   console.log("End of Game!");
-  document.querySelector(".btn-roll-0").classList.add("hidden");
 
   if (globalScore0 > globalScore1){
     document.getElementById("name-0").textContent = "WINNER!";
+
   } else {
     document.getElementById("name-1").textContent = "WINNER!";
   }
+
+  document.querySelector(".btn-roll-0").classList.add("hidden");
+
 }
