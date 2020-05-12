@@ -469,12 +469,8 @@ function calcScore() {
         document.getElementById("yahtzeeScore" + activePlayer).textContent = "0";
       }
     } else {
-      if (scores["p" + activePlayer][11].length == 0) {
         document.getElementById("yahtzeeScore" + activePlayer).textContent = scores["p" + activePlayer][11];
-      } else {
-        document.getElementById("yahtzeeScore" + activePlayer).textContent = "0";
       }
-    }
   })(dice);
 
 
