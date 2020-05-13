@@ -1,36 +1,66 @@
-let activePlayer, scores, dice, rollCount, finalDice, tempDice, chanceScore, globalCounter, p1Score, score;
+let DOM, activePlayer, scores, dice, rollCount, finalDice, tempDice, chanceScore, globalCounter, score;
 
+DOM = {
+  // Player Elements
+  plPanel: document.querySelectorAll('.player-panel'), // Player Panel P1 (0) P2 (1)
+  p0Score: document.querySelector(".player-0-score"), //Player 1 (0) global score
+  p1Score: document.querySelector(".player-1-score"), //Player 2 (1) global score 
+  // Buttons
+  btnRoll: document.querySelectorAll(".btn-roll"),  // Player Roll
+  btnScore: document.querySelectorAll(".btn-score"), // Scorecard Buttons
+
+  // Dice
+  diceImg: document.querySelectorAll(".dice"),
+
+  // Score card elements
+  scorecardBtns0: document.querySelectorAll(".btn-0"),
+  scorecardBtns1: document.querySelectorAll(".btn-1"),
+
+  onesScore: document.querySelectorAll(".onesScore"),
+  twosScore: document.querySelectorAll(".twosScore"),
+  threesScore: document.querySelectorAll(".threesScore"),
+  foursScore: document.querySelectorAll(".foursScore"),
+  fivesScore: document.querySelectorAll(".fivesScore"),
+  sixesScore: document.querySelectorAll(".sixesScore"),
+  toakScore: document.querySelectorAll(".toakScore"),
+  foakScore: document.querySelectorAll(".foakScore"),
+  fullhouseScore: document.querySelectorAll(".fullhouseScore"),
+  ssScore: document.querySelectorAll(".ssScore"),
+  lsScore: document.querySelectorAll(".lsScore"),
+  yahtzeeScore: document.querySelectorAll(".yahtzeeScore"),
+  chanceScore: document.querySelectorAll(".chanceScore"),
+}
 
 initGame();
 
-document.querySelectorAll(".btn-roll").forEach(rollBtn => {
-  rollBtn.addEventListener("click", function() {
+DOM.btnRoll.forEach(btnRoll => {
+  btnRoll.addEventListener("click", function() {
     console.log("roll button clicked");
     showDice();
     //check roll count
     if (rollCount < 4) {
       diceRoll();
       for (let i = 1; i < dice.length; i++) {
-        document.querySelector(".dice-" + i).src = "./images/dice-" + dice[i] + ".png";
+        DOM.diceImg[i - 1].src = "./images/dice-" + dice[i] + ".png";
       }
       calcScore();
     } else {
-      document.querySelector(".btn-roll-" + activePlayer).disabled = true;
-      document.querySelector(".btn-roll-" + activePlayer).textContent = "No more rolls";
+      DOM.btnRoll[activePlayer].disabled = true;
+      DOM.btnRoll[activePlayer].textContent = "No more rolls";
       calcScore();
       rollCount = 0;
     }
   })
 });
 
-document.querySelectorAll(".btn-score").forEach(scoreBtn => {
+DOM.btnScore.forEach(scoreBtn => {
   scoreBtn.addEventListener("click", function(e) {
     saveScore(e);
     toggleActive();
   });
 });
 
-document.querySelectorAll(".dice").forEach(dice => {
+DOM.diceImg.forEach(dice => {
   dice.addEventListener("click", e => {
     e.target.classList.toggle("active-dice");
   })
@@ -41,113 +71,117 @@ document.querySelectorAll(".dice").forEach(dice => {
  * FUNCTIONS
  */
 
+ // Initialise Game
+ function initGame() {
+   // Sets P1 (0) as starting player
+   activePlayer = 0;
+   // Reset scores
+   scores = {
+     p0: [
+       [], //onesScore
+       [], //twosScore
+       [], //threesScore
+       [], //foursScore
+       [], //fivesScore
+       [], //sixesScore
+       [], //toakScore
+       [], //foakScore
+       [], //fullhouseScore
+       [], //ssScore
+       [], //lsScore
+       [], //yahtzeeScore
+       []  //chanceScore
+       ],
+     p1: [
+       [], //onesScore
+       [], //twosScore
+       [], //threesScore
+       [], //foursScore
+       [], //fivesScore
+       [], //sixesScore
+       [], //toakScore
+       [], //foakScore
+       [], //fullhouseScore
+       [], //ssScore
+       [], //lsScore
+       [], //yahtzeeScore
+       []  //chanceScore
+       ]
+   };
+
+   // Reset counter that detects end of turn
+   rollCount = 0;
+
+   // Sets initial dice line up
+   dice = [0, 1, 2, 3, 4, 5];
+
+   // Reset counter that detects End of game
+   globalCounter = 0;
+
+   // Set up UI for start of game
+   hideDice();
+   removeUsed();
+   removeActiveDice();
+
+   // Reset the active player to P1 (0)
+   DOM.plPanel[0].classList.remove("active");
+   DOM.plPanel[0].classList.add("active");
+   DOM.plPanel[1].classList.remove("active");
+
+   // Hide P2 (1) Roll button
+   DOM.btnRoll[1].classList.add("hidden");
+
+   // Disable p2 (1) scorecard at start
+   DOM.scorecardBtns1.forEach(btn => {
+     btn.disabled = true;
+   });
+ };
+
 function hideDice() {
-  document.querySelector(".dice-1").classList.add("hidden");
-  document.querySelector(".dice-2").classList.add("hidden");
-  document.querySelector(".dice-3").classList.add("hidden");
-  document.querySelector(".dice-4").classList.add("hidden");
-  document.querySelector(".dice-5").classList.add("hidden");
+  DOM.diceImg[0].classList.add("hidden");
+  DOM.diceImg[1].classList.add("hidden");
+  DOM.diceImg[2].classList.add("hidden");
+  DOM.diceImg[3].classList.add("hidden");
+  DOM.diceImg[4].classList.add("hidden");
 }
 
 function showDice() {
-  document.querySelector(".dice-1").classList.remove("hidden");
-  document.querySelector(".dice-2").classList.remove("hidden");
-  document.querySelector(".dice-3").classList.remove("hidden");
-  document.querySelector(".dice-4").classList.remove("hidden");
-  document.querySelector(".dice-5").classList.remove("hidden");
+  DOM.diceImg[0].classList.remove("hidden");
+  DOM.diceImg[1].classList.remove("hidden");
+  DOM.diceImg[2].classList.remove("hidden");
+  DOM.diceImg[3].classList.remove("hidden");
+  DOM.diceImg[4].classList.remove("hidden");
 }
 
 function hideRollBtns() {}
 
+
+// Generates random numbers for the dice
 function diceRoll() {
+
   for (let i = 1; i < 6; i++) {
-    if (document.querySelector(".dice-" + i).classList.contains("active-dice")) {
+    // Identifies "held" dice and skips the roll on them
+    if (DOM.diceImg[i - 1].classList.contains("active-dice")) {
       continue
     } else {
       dice[i] = (Math.floor(Math.random() * 6) + 1);
     }
   }
+  // Increment roll count towards end of turn
   rollCount++;
-  return dice, rollCount;
-
+  // return dice, rollCount;
 }
-
-function initGame() {
-  activePlayer = 0;
-  p1Score = 0;
-  scores = {
-    p0: [
-      [], //onesScore
-      [], //twosScore
-      [], //threesScore
-      [], //foursScore
-      [], //fivesScore
-      [], //sixesScore
-      [], //toakScore
-      [], //foakScore
-      [], //fullhouseScore
-      [], //ssScore
-      [], //lsScore
-      [], //yahtzeeScore
-      [] //chanceScore
-      ],
-    p1: [
-      [], //onesScore
-      [], //twosScore
-      [], //threesScore
-      [], //foursScore
-      [], //fivesScore
-      [], //sixesScore
-      [], //toakScore
-      [], //foakScore
-      [], //fullhouseScore
-      [], //ssScore
-      [], //lsScore
-      [], //yahtzeeScore
-      [] //chanceScore
-      ]
-  };
-
-  // Detects end of turn
-  rollCount = 0;
-
-  // Sets initial dice line up
-  dice = [0, 1, 2, 3, 4, 5];
-
-  // Detects End of game
-  globalCounter = 0;
-
-  hideDice();
-  removeUsed();
-  removeActiveDice();
-
-
-  // Reset the active player to P1 (0)
-  document.querySelector(".player-0-panel").classList.remove("active");
-  document.querySelector(".player-0-panel").classList.add("active");
-  document.querySelector(".player-1-panel").classList.remove("active");
-
-  // Hide P2 (1) Roll button
-  document.querySelector(".btn-roll-1").classList.add("hidden");
-
-  // Disable p2 (1) scorecard for first turn
-  document.querySelectorAll(".btn-1").forEach(btn => {
-    btn.disabled = true;
-  });
-};
 
 // Remove strikethrough on score card
 function removeUsed() {
-  let elems = document.querySelectorAll(".btn-score");
-  [].forEach.call(elems, function(el) {
+  [].forEach.call(DOM.btnScore, function(el) {
     el.classList.remove("used");
   });
 };
 
 // Removes styling to selected dice
 function removeActiveDice() {
-  let elems = document.querySelectorAll(".dice");
-  [].forEach.call(elems, function(el) {
+  [].forEach.call(DOM.diceImg, function(el) {
     el.classList.remove("active-dice");
   });
 };
@@ -155,36 +189,41 @@ function removeActiveDice() {
 // Toggles between P1 (0) & P2 (1)
 function toggleActive() {
   activePlayer = activePlayer ? 0 : 1;
-  document.querySelector(".player-0-panel").classList.toggle("active");
-  document.querySelector(".player-1-panel").classList.toggle("active");
+  DOM.plPanel[0].classList.toggle("active");
+  DOM.plPanel[1].classList.toggle("active");
 
   if (activePlayer == 0) {
-    document.querySelector(".btn-roll-1").classList.add("hidden");
-    document.querySelector(".btn-roll-0").classList.remove("hidden");
-    document.querySelector(".btn-roll-1").disabled = true;
-    document.querySelector(".btn-roll-0").disabled = false;
-    document.querySelector(".btn-roll-0").innerHTML = "<i class=\"fas fa-dice-d6\"></i> Roll Dice";
-    document.querySelector(".btn-roll-1").innerHTML = "<i class=\"fas fa-dice-d6\"></i> Roll Dice";
-    document.querySelectorAll(".btn-1").forEach(btn => {
+    // Hide/reveal Roll Btn
+    DOM.btnRoll[1].classList.add("hidden");
+    DOM.btnRoll[0].classList.remove("hidden");
+
+    // Remove "NO MORE ROLLS" message if displayed
+    resetDiceTxt();
+
+    // Enable scorecard interaction for active player
+    DOM.scorecardBtns1.forEach(btn => {
       btn.disabled = true;
     });
-    document.querySelectorAll(".btn-0").forEach(btn => {
+    DOM.scorecardBtns0.forEach(btn => {
       btn.disabled = false;
     });
   } else {
-    document.querySelector(".btn-roll-0").classList.add("hidden");
-    document.querySelector(".btn-roll-1").classList.remove("hidden");
-    document.querySelector(".btn-roll-0").disabled = true;
-    document.querySelector(".btn-roll-1").disabled = false;
-    document.querySelector(".btn-roll-0").innerHTML = "<i class=\"fas fa-dice-d6\"></i> Roll Dice";
-    document.querySelector(".btn-roll-1").innerHTML = "<i class=\"fas fa-dice-d6\"></i> Roll Dice";
-    document.querySelectorAll(".btn-0").forEach(btn => {
+    // Hide/reveal Roll Btn
+    DOM.btnRoll[0].classList.add("hidden");
+    DOM.btnRoll[1].classList.remove("hidden");
+
+    // Remove "NO MORE ROLLS" message if displayed
+    resetDiceTxt();
+
+    DOM.scorecardBtns0.forEach(btn => {
       btn.disabled = true;
     });
-    document.querySelectorAll(".btn-1").forEach(btn => {
+    DOM.scorecardBtns1.forEach(btn => {
       btn.disabled = false;
     });
   };
+
+
 
   // Resets the turns
   rollCount = 0;
@@ -193,6 +232,11 @@ function toggleActive() {
 
 };
 
+function resetDiceTxt() {
+  DOM.btnRoll[0].innerHTML = "<i class=\"fas fa-dice-d6\"></i> Roll Dice";
+  DOM.btnRoll[1].innerHTML = "<i class=\"fas fa-dice-d6\"></i> Roll Dice";
+}
+
 function calcScore() {
 
   // ONES
@@ -200,12 +244,12 @@ function calcScore() {
     let onesScore = dice.filter(num => num === 1);
     if (scores["p" + activePlayer][0].length == 0) {
       if (onesScore.length > 0) {
-        document.getElementById("onesScore" + activePlayer).textContent = onesScore.reduce(reduce);
+         DOM.onesScore[activePlayer].textContent = onesScore.reduce(reduce);
       } else {
-        document.getElementById("onesScore" + activePlayer).textContent = "0";
+        DOM.onesScore[activePlayer].textContent = "0";
       };
     } else {
-      document.getElementById("onesScore" + activePlayer).textContent = scores["p" + activePlayer][0];
+      DOM.onesScore[activePlayer].textContent = scores["p" + activePlayer][0];
     }
   })(dice);
 
@@ -214,12 +258,12 @@ function calcScore() {
     let twosScore = dice.filter(num => num === 2);
     if (scores["p" + activePlayer][1].length == 0 ) {
       if (twosScore.length > 0) {
-        document.getElementById("twosScore" + activePlayer).textContent = twosScore.reduce(reduce);
+        DOM.twosScore[activePlayer].textContent = twosScore.reduce(reduce);
       } else {
-        document.getElementById("twosScore" + activePlayer).textContent = "0";
+        DOM.twosScore[activePlayer].textContent = "0";
       };
     } else {
-      document.getElementById("twosScore" + activePlayer).textContent = scores["p" + activePlayer][1];
+      DOM.twosScore[activePlayer].textContent = scores["p" + activePlayer][1];
     }
   })(dice);
 
@@ -228,12 +272,12 @@ function calcScore() {
     let threesScore = dice.filter(num => num === 3);
     if (scores["p" + activePlayer][2].length == 0 ) {
       if (threesScore.length > 0) {
-        document.getElementById("threesScore" + activePlayer).textContent = threesScore.reduce(reduce);
+        DOM.threesScore[activePlayer].textContent = threesScore.reduce(reduce);
       } else {
-        document.getElementById("threesScore" + activePlayer).textContent = "0";
+        DOM.threesScore[activePlayer].textContent = "0";
       };
     } else {
-      document.getElementById("threesScore" + activePlayer).textContent = scores["p" + activePlayer][2];
+      DOM.threesScore[activePlayer].textContent = scores["p" + activePlayer][2];
     }
   })(dice);
 
@@ -242,12 +286,12 @@ function calcScore() {
     let foursScore = dice.filter(num => num === 4);
     if (scores["p" + activePlayer][3].length == 0 ) {
       if (foursScore.length > 0) {
-        document.getElementById("foursScore" + activePlayer).textContent = foursScore.reduce(reduce);
+        DOM.foursScore[activePlayer].textContent = foursScore.reduce(reduce);
       } else {
-        document.getElementById("foursScore" + activePlayer).textContent = "0";
+        DOM.foursScore[activePlayer].textContent = "0";
       };
     } else {
-      document.getElementById("foursScore" + activePlayer).textContent = scores["p" + activePlayer][3];
+      DOM.foursScore[activePlayer].textContent = scores["p" + activePlayer][3];
     }
   })(dice);
 
@@ -256,12 +300,12 @@ function calcScore() {
     let fivesScore = dice.filter(num => num === 5);
     if (scores["p" + activePlayer][4].length == 0) {
       if (fivesScore.length > 0) {
-        document.getElementById("fivesScore" + activePlayer).textContent = fivesScore.reduce(reduce);
+        DOM.fivesScore[activePlayer].textContent = fivesScore.reduce(reduce);
       } else {
-        document.getElementById("fivesScore" + activePlayer).textContent = "0";
+        DOM.fivesScore[activePlayer].textContent = "0";
       };
     } else {
-      document.getElementById("fivesScore" + activePlayer).textContent = scores["p" + activePlayer][4];
+      DOM.fivesScore[activePlayer].textContent = scores["p" + activePlayer][4];
     }
   })(dice);
 
@@ -270,12 +314,12 @@ function calcScore() {
     let sixesScore = dice.filter(num => num === 6);
     if (scores["p" + activePlayer][5].length == 0 ) {
       if (sixesScore.length > 0) {
-        document.getElementById("sixesScore" + activePlayer).textContent = sixesScore.reduce(reduce);
+        DOM.sixesScore[activePlayer].textContent = sixesScore.reduce(reduce);
       } else {
-        document.getElementById("sixesScore" + activePlayer).textContent = "0";
+        DOM.sixesScore[activePlayer].textContent = "0";
       };
     } else {
-      document.getElementById("sixesScore" + activePlayer).textContent = scores["p" + activePlayer][5];
+      DOM.sixesScore[activePlayer].textContent = scores["p" + activePlayer][5];
     }
   })(dice);
 
@@ -309,9 +353,9 @@ function calcScore() {
     if (scores["p" + activePlayer][6].length == 0 ) {
       if (toak.length) {
 
-        document.getElementById("toakScore" + activePlayer).textContent = dice.reduce(reduce);
+        DOM.toakScore[activePlayer].textContent = dice.reduce(reduce);
       } else {
-        document.getElementById("toakScore" + activePlayer).textContent = "0";
+        DOM.toakScore[activePlayer].textContent = "0";
       }
     }
 
@@ -347,9 +391,9 @@ function calcScore() {
     if (scores["p" + activePlayer][7].length == 0 ) {
       if (foak.length) {
 
-        document.getElementById("foakScore" + activePlayer).textContent = dice.reduce(reduce);
+        DOM.foakScore[activePlayer].textContent = dice.reduce(reduce);
       } else {
-        document.getElementById("foakScore" + activePlayer).textContent = "0";
+        DOM.foakScore[activePlayer].textContent = "0";
       }
     }
 
@@ -386,13 +430,13 @@ function calcScore() {
       if (fullhouse.length == 2) {
         if (fullhouse[0].count == "2" && fullhouse[1].count == "3" || fullhouse[0].count == "3" && fullhouse[1].count == "2") {
 
-          document.getElementById("fullhouseScore" + activePlayer).textContent = "25";
+          DOM.fullhouseScore[activePlayer].textContent = "25";
         } else {
-          document.getElementById("fullhouseScore" + activePlayer).textContent = "0";
+          DOM.fullhouseScore[activePlayer].textContent = "0";
         }
       }
     } else {
-        document.getElementById("fullhouseScore" + activePlayer).textContent = scores["p" + activePlayer][8];
+        DOM.fullhouseScore[activePlayer].textContent = scores["p" + activePlayer][8];
     }
   })(dice);
 
@@ -405,12 +449,12 @@ function calcScore() {
 
     if (scores["p" + activePlayer][9].length == 0){
       if (/1234|2345|3456/.test(copy.join("").replace(/(.)\1/, "$1"))) {
-          document.getElementById("ssScore" + activePlayer).textContent = "30";
+          DOM.ssScore[activePlayer].textContent = "30";
       } else {
-          document.getElementById("ssScore" + activePlayer).textContent = "0";
+         DOM.ssScore[activePlayer].textContent = "0";
       };
     } else {
-      document.getElementById("ssScore" + activePlayer).textContent = scores["p" + activePlayer][9];
+      DOM.ssScore[activePlayer].textContent = scores["p" + activePlayer][9];
     };
   })(dice);
 
@@ -423,12 +467,12 @@ function calcScore() {
 
     if (scores["p" + activePlayer][10].length == 0){
       if (/12345|23456/.test(copy.join("").replace(/(.)\1/, "$1"))) {
-          document.getElementById("lsScore" + activePlayer).textContent = "40";
+          DOM.lsScore[activePlayer].textContent = "40";
       } else {
-          document.getElementById("lsScore" + activePlayer).textContent = "0";
+          DOM.lsScore[activePlayer].textContent = "0";
       };
     } else {
-      document.getElementById("lsScore" + activePlayer).textContent = scores["p" + activePlayer][10];
+      DOM.lsScore[activePlayer].textContent = scores["p" + activePlayer][10];
     };
   })(dice);
 
@@ -464,12 +508,12 @@ function calcScore() {
     if (scores["p" + activePlayer][11].length == 0 ) {
       if (yahtzee.length) {
 
-        document.getElementById("yahtzeeScore" + activePlayer).textContent = "50";
+        DOM.yahtzeeScore[activePlayer].textContent = "50";
       } else {
-        document.getElementById("yahtzeeScore" + activePlayer).textContent = "0";
+        DOM.yahtzeeScore[activePlayer].textContent = "0";
       }
     } else {
-        document.getElementById("yahtzeeScore" + activePlayer).textContent = scores["p" + activePlayer][11];
+        DOM.yahtzeeScore[activePlayer].textContent = scores["p" + activePlayer][11];
       }
   })(dice);
 
@@ -477,9 +521,9 @@ function calcScore() {
   // CHANCE
   (function chance(dice) {
     if (scores["p" + activePlayer][12].length == 0) {
-      document.getElementById("chanceScore" + activePlayer).textContent = dice.reduce(reduce);
+      DOM.chanceScore[activePlayer].textContent = dice.reduce(reduce);
     } else {
-      document.getElementById("chanceScore" + activePlayer).textContent = scores["p" + activePlayer][12];
+      DOM.chanceScore[activePlayer].textContent = scores["p" + activePlayer][12];
     };
   })(dice);
 
@@ -490,18 +534,30 @@ function calcScore() {
 }
 
 function saveScore(e) {
-  let str = e.target.name;
-  let targetNum = str.substring(1, str.length);
-  let target = str.substring(0, str.length -1);
-  let name = (e.target.nextElementSibling.id).substring(0, e.target.nextElementSibling.id.length -1);
-  score = document.getElementById(e.target.nextElementSibling.id).textContent;
+  //
+  const str = e.target.name;
+  // Remove first number to identify location to post to in score array
+  const targetNum = str.substring(1, str.length);
+  // score type classname
+  const target = e.target.nextElementSibling.classList[1];
+
+  // Set score to text content in next element
+  score = document.querySelector("." + target).textContent;
+  // Apply score to score array - Parse int first
   scores["p" + activePlayer][targetNum] = parseInt(score);
+  // Add strikethrough class to button text
   e.target.classList.add("used");
-  console.log(scores["p" + activePlayer]);
+
+  // Update UI
   hideDice();
   clearTempScores();
+
+  // Update global score
   globalScore();
+
+  // Increment global turn counter
   globalCounter++;
+  // Perform check to see if end of game
   if (globalCounter === 26) {
     gameOver();
   }
@@ -558,44 +614,44 @@ function clearTempScores() {
     //   if (scores["p" + activePlayer][i] === "") {
     //   document.getElementById(label + activePlayer).textContent = "0";
     // };
-  if (scores["p" + activePlayer][0] == false ) {
-    document.getElementById("onesScore" + activePlayer).textContent = "0";
+  if (scores["p" + activePlayer][0].length === 0) {
+    DOM.onesScore[activePlayer].textContent = "0";
   };
-  if (scores["p" + activePlayer][1] == false ) {
-    document.getElementById("twosScore" + activePlayer).textContent = "0";
+  if (scores["p" + activePlayer][1].length === 0) {
+    DOM.twosScore[activePlayer].textContent = "0";
   };
-  if (scores["p" + activePlayer][2] == false ) {
-    document.getElementById("threesScore" + activePlayer).textContent = "0";
+  if (scores["p" + activePlayer][2].length === 0) {
+    DOM.threesScore[activePlayer].textContent = "0";
   };
-  if (scores["p" + activePlayer][3] == false ) {
-    document.getElementById("foursScore" + activePlayer).textContent = "0";
+  if (scores["p" + activePlayer][3].length === 0) {
+    DOM.foursScore[activePlayer].textContent = "0";
   };
-  if (scores["p" + activePlayer][4] == false ) {
-    document.getElementById("fivesScore" + activePlayer).textContent = "0";
+  if (scores["p" + activePlayer][4].length === 0) {
+    DOM.fivesScore[activePlayer].textContent = "0";
   };
-  if (scores["p" + activePlayer][5] == false ) {
-    document.getElementById("sixesScore" + activePlayer).textContent = "0";
+  if (scores["p" + activePlayer][5].length === 0) {
+    DOM.sixesScore[activePlayer].textContent = "0";
   };
-  if (scores["p" + activePlayer][6] === false ) {
-    document.getElementById("toakScore" + activePlayer).textContent = "0";
+  if (scores["p" + activePlayer][6].length === 0) {
+    DOM.toakScore[activePlayer].textContent = "0";
   };
-  if (scores["p" + activePlayer][7] == false ) {
-    document.getElementById("foakScore" + activePlayer).textContent = "0";
+  if (scores["p" + activePlayer][7].length === 0) {
+    DOM.foakScore[activePlayer].textContent = "0";
   };
-  if (scores["p" + activePlayer][8] == false ) {
-    document.getElementById("fullhouseScore" + activePlayer).textContent = "0";
+  if (scores["p" + activePlayer][8].length === 0) {
+    DOM.fullhouseScore[activePlayer].textContent = "0";
   };
-  if (scores["p" + activePlayer][9] == false ) {
-    document.getElementById("ssScore" + activePlayer).textContent = "0";
+  if (scores["p" + activePlayer][9].length === 0) {
+    DOM.ssScore[activePlayer].textContent = "0";
   };
-  if (scores["p" + activePlayer][10] == false ) {
-    document.getElementById("lsScore" + activePlayer).textContent = "0";
+  if (scores["p" + activePlayer][10].length === 0) {
+    DOM.lsScore[activePlayer].textContent = "0";
   };
-  if (scores["p" + activePlayer][11] === false ) {
-    document.getElementById("yahtzeeScore" + activePlayer).textContent = "0";
+  if (scores["p" + activePlayer][11].length === 0) {
+    DOM.yahtzeeScore[activePlayer].textContent = "0";
   };
-  if (scores["p" + activePlayer][12] == false ) {
-    document.getElementById("chanceScore" + activePlayer).textContent = "0";
+  if (scores["p" + activePlayer][12].length === 0) {
+    DOM.chanceScore[activePlayer].textContent = "0";
   };
 }
 
@@ -606,8 +662,8 @@ function globalScore() {
 
   console.log(globalScore0);
 
-  document.querySelector(".player-0-score").innerHTML = "Score: " + globalScore0;
-  document.querySelector(".player-1-score").innerHTML = "Score: " + globalScore1;
+  DOM.p0Score.innerHTML = "Score: " + globalScore0;
+  DOM.p1Score.innerHTML = "Score: " + globalScore1;
 
   return globalScore0, globalScore1;
 }
