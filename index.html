@@ -157,6 +157,174 @@
       <img src="images/dice-5.png" class="dice dice-5" />
 
       <button class="btn btn-new"><i class="fas fa-redo-alt"></i> New Game</button>
+
+  </div>
+
+  <button type="button" class="open-modal rules" data-open="rules">Rules</button>
+  <button type="button" class="open-modal scores" data-open="scores">Scores</button>
+
+  <div class="modal" id="rules" data-animation="zoomInOut">
+    <div class="modal-dialog">
+      <header class="modal-header">
+        Yahtzee Rules
+        <button class="close-modal" aria-label="close modal" data-close>
+        ✕
+      </button>
+      </header>
+      <section class="modal-content">
+        <p>
+          Beginning with the starting player, players will take turns one at a time.
+          The game consists of thirteen rounds and at the end of the
+          thirteenth round then the game will end. (All the categories on the players’
+          score cards will be completely filled in at that point.)
+        </p>
+
+        <p>
+          At the start of a turn, the player hits their <em>Roll Dice</em> button to
+          roll the five dice. They can then roll some or all of the dice up to two more
+          times, clicking the dice they’d like to keep and rerolling the rest the same
+          way as before. The dice can be scored after any of the rolls, but scoring
+          the dice ends the player’s turn. Setting dice aside after one roll does not
+          prevent one or more of them from being rolled again on any subsequent roll if
+          the player so chooses; just un-select the dice that is to be rolled.
+        </p>
+
+        <p>
+          Each player’s goal is to try and score as high as they can in one of the thirteen
+          categories shown on their score card.
+        </p>
+
+        <p>
+          To score the dice, the player selects one of the categories on their score card
+          and and the score will be applied into it. Each category can be scored only once
+          per game. Categories can be filled in any order. A player must score the dice on
+          their turn even if it turns out that there are no good categories remaining to
+          score in. Once a category is filled it may not be changed.
+        </p>
+
+        <p>
+          A player may submit a score of zero in any category if they have rolled no
+          point-generating results or if they simply choose to do so. For example, a player
+          could put a roll of 2-4-5-6-6 into the <em>Ones</em> category even though it would
+          score zero points.
+        </p>
+
+        <p>
+          After submitting their score on their score card, the player’s turn ends and play
+          proceeds to the player on their left.</p>
+        </p>
+      </section>
+    </div>
+  </div>
+
+  <div class="modal" id="scores" data-animation="zoomInOut">
+    <div class="modal-dialog">
+      <header class="modal-header">
+        Yahtzee Rules
+        <button class="close-modal" aria-label="close modal" data-close>
+        ✕
+      </button>
+      </header>
+      <section class="modal-content">
+        <div class="score-info">
+          <div class="score-left">
+            <h4>Ones</h4><br />
+            <p>
+              <strong>What is needed to score:</strong> Ones
+            </p>
+            <p>
+              <strong>Score:</strong> Receive 1 point for each 1 rolled
+            </p><br />
+            <h4>Twos</h4><br />
+            <p>
+              <strong>What is needed to score:</strong> Twos
+            </p>
+            <p>
+              <strong>Score:</strong> Receive 2 points for each 2 rolled
+            </p><br />
+            <h4>Threes</h4><br />
+            <p>
+              <strong>What is needed to score:</strong> Threes
+            </p>
+            <p>
+              <strong>Score:</strong> Receive 3 points for each 3 rolled
+            </p><br />
+            <h4>Fours</h4><br />
+            <p>
+              <strong>What is needed to score:</strong> Fours
+            </p>
+            <p>
+              <strong>Score:</strong> Receive 4 points for each 4 rolled
+            </p><br />
+            <h4>Fives</h4><br />
+            <p>
+              <strong>What is needed to score:</strong> Fives
+            </p>
+            <p>
+            <strong>Score:</strong> Receive 5 points for each 5 rolled
+            </p><br />
+            <h4>Sixes</h4><br />
+            <p>
+              <strong>What is needed to score:</strong> Sixes
+            </p>
+            <p>
+              <strong>Score:</strong> Receive 6 points for each 6 rolled
+            </p>
+          </div>
+
+          <div class="score-right">
+            <h4>Three of a Kind</h4><br />
+            <p>
+              <strong>What is needed to score:</strong> Three dice of the same number
+            </p>
+            <p>
+              <strong>Score:</strong> Add up all the spots on all the dice. (For example, rolling 2-2-2-3-5 would score a total of 14 points.)
+            </p><br />
+            <h4>Four of a Kind</h4><br />
+            <p>
+              <strong>What is needed to score:</strong> Four dice of the same number
+            </p>
+            <p>
+              <strong>Score:</strong> Add up all the spots on all the dice
+            </p><br />
+            <h4>Full House</h4><br />
+            <p>
+              <strong>What is needed to score:</strong> Three dice showing the same number, and two dice showing another number.</p>
+            <p>
+              <strong>Score:</strong> 25 points
+            </p><br />
+            <h4>Small Straight</h4><br />
+            <p>
+              <strong>What is needed to score:</strong> Any four consecutive numbers (for example, 3-4-5-6)
+            </p>
+            <p>
+              <strong>Score:</strong> 30 points
+            </p><br />
+            <h4>Large Straight</h4><br />
+            <p>
+              <strong>What is needed to score:</strong> Any five consecutive numbers (for example, 1-2-3-4-5)
+            </p>
+            <p>
+              <strong>Score:</strong> 40 points
+            </p><br />
+            <h4>Yahtzee (or Five of a Kind)</h4><br />
+            <p>
+              <strong>What is needed to score:</strong> All 5 dice showing the same number
+            </p>
+            <p>
+              <strong>Score:</strong> 50 points
+            </p><br />
+            <h4>Chance</h4>
+            <p>
+            <strong>What is needed to score:</strong> Any combination of dice
+            </p>
+            <p>
+            <strong>Score:</strong> Add up all the spots on all the dice
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
   </div>
   <script type="text/javascript" src="js/app.js">
 

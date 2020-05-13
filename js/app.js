@@ -4,10 +4,11 @@ DOM = {
   // Player Elements
   plPanel: document.querySelectorAll('.player-panel'), // Player Panel P1 (0) P2 (1)
   p0Score: document.querySelector(".player-0-score"), //Player 1 (0) global score
-  p1Score: document.querySelector(".player-1-score"), //Player 2 (1) global score 
+  p1Score: document.querySelector(".player-1-score"), //Player 2 (1) global score
   // Buttons
   btnRoll: document.querySelectorAll(".btn-roll"),  // Player Roll
   btnScore: document.querySelectorAll(".btn-score"), // Scorecard Buttons
+  btnNew: document.querySelector(".btn-new"),
 
   // Dice
   diceImg: document.querySelectorAll(".dice"),
@@ -28,10 +29,14 @@ DOM = {
   ssScore: document.querySelectorAll(".ssScore"),
   lsScore: document.querySelectorAll(".lsScore"),
   yahtzeeScore: document.querySelectorAll(".yahtzeeScore"),
-  chanceScore: document.querySelectorAll(".chanceScore"),
+  chanceScore: document.querySelectorAll(".chanceScore")
 }
 
 initGame();
+
+/*******************************************************
+** EVENT LISTENERS
+*/
 
 DOM.btnRoll.forEach(btnRoll => {
   btnRoll.addEventListener("click", function() {
@@ -65,6 +70,11 @@ DOM.diceImg.forEach(dice => {
     e.target.classList.toggle("active-dice");
   })
 });
+
+DOM.btnNew.addEventListener("click", function() {
+  console.log("New Game");
+  initGame();
+})
 
 
 /****************************************************
@@ -118,10 +128,13 @@ DOM.diceImg.forEach(dice => {
    // Reset counter that detects End of game
    globalCounter = 0;
 
+
    // Set up UI for start of game
    hideDice();
    removeUsed();
    removeActiveDice();
+   clearTempScores();
+   globalScore();
 
    // Reset the active player to P1 (0)
    DOM.plPanel[0].classList.remove("active");
@@ -681,3 +694,36 @@ function gameOver() {
   document.querySelector(".btn-roll-0").classList.add("hidden");
 
 }
+
+
+// RULES
+
+const openEls = document.querySelectorAll("[data-open]");
+const closeEls = document.querySelectorAll("[data-close]");
+const isVisible = "is-visible";
+
+for (const el of openEls) {
+  el.addEventListener("click", function() {
+    const modalId = this.dataset.open;
+    document.getElementById(modalId).classList.add(isVisible);
+  });
+}
+
+for (const el of closeEls) {
+  el.addEventListener("click", function() {
+    this.parentElement.parentElement.parentElement.classList.remove(isVisible);
+  });
+}
+
+document.addEventListener("click", e => {
+  if (e.target == document.querySelector(".modal.is-visible")) {
+    document.querySelector(".modal.is-visible").classList.remove(isVisible);
+  }
+});
+
+document.addEventListener("keyup", e => {
+  // if we press the ESC
+  if (e.key == "Escape" && document.querySelector(".modal.is-visible")) {
+    document.querySelector(".modal.is-visible").classList.remove(isVisible);
+  }
+});
