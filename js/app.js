@@ -5,10 +5,14 @@ DOM = {
   plPanel: document.querySelectorAll('.player-panel'), // Player Panel P1 (0) P2 (1)
   p0Score: document.querySelector(".player-0-score"), //Player 1 (0) global score
   p1Score: document.querySelector(".player-1-score"), //Player 2 (1) global score
+  p0Name: document.getElementById("name-0"),
+  p1Name: document.getElementById("name-1"),
+
   // Buttons
   btnRoll: document.querySelectorAll(".btn-roll"),  // Player Roll
   btnScore: document.querySelectorAll(".btn-score"), // Scorecard Buttons
   btnNew: document.querySelector(".btn-new"),
+  start: document.getElementById("startGame"),
 
   // Dice
   diceImg: document.querySelectorAll(".dice"),
@@ -74,7 +78,31 @@ DOM.diceImg.forEach(dice => {
 DOM.btnNew.addEventListener("click", function() {
   console.log("New Game");
   initGame();
-})
+});
+
+DOM.start.addEventListener("click", function() {
+  let p0Name = document.getElementById("p0").value;
+  let p1Name = document.getElementById("p1").value;
+
+
+  // SET PLAYER NAMES
+
+  if (p0Name) {
+    DOM.p0Name.textContent = p0Name;
+  } else {
+    DOM.p0Name.textContent = "Player 1";
+  }
+  if (p1Name) {
+    DOM.p1Name.textContent = p1Name;
+  } else {
+    DOM.p1Name.textContent = "Player 2";
+  }
+
+  document.getElementById("start").classList.add("hidden");
+
+  document.getElementById("p0").value = null;
+  document.getElementById("p1").value = null;
+});
 
 
 /****************************************************
@@ -83,6 +111,9 @@ DOM.btnNew.addEventListener("click", function() {
 
  // Initialise Game
  function initGame() {
+   // Open Player name screen
+   document.getElementById("start").classList.remove("hidden");
+
    // Sets P1 (0) as starting player
    activePlayer = 0;
    // Reset scores
@@ -151,9 +182,7 @@ DOM.btnNew.addEventListener("click", function() {
      btn.disabled = true;
    });
 
-   // RESET PLAYER NAMES
-     document.getElementById("name-0").textContent = "Player 1";
-     document.getElementById("name-1").textContent = "Player 2!";
+
  };
 
 function hideDice() {
@@ -704,10 +733,10 @@ function gameOver() {
   console.log("End of Game!");
 
   if (globalScore0 > globalScore1){
-    document.getElementById("name-0").textContent = "WINNER!";
+    DOM.p0Name.textContent = "WINNER!";
 
   } else {
-    document.getElementById("name-1").textContent = "WINNER!";
+    DOM.p1Name("name-1").textContent = "WINNER!";
   }
 
   document.querySelector(".btn-roll-0").classList.add("hidden");

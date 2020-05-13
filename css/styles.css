@@ -217,6 +217,38 @@ width: 100%;
 padding: 0;
 }
 
+.start-screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  height: 500px;
+  background-color: #691d2f;
+  color: #fff;
+  padding: 100px;
+}
+
+.start-screen input[type=text] {
+  display: block;
+  margin: 50px auto;
+  width: 600px;
+  height: 50px;
+  font-size: 20px;
+  padding: 10px;
+}
+
+.start-screen button {
+  width: 150px;
+  height: 50px;
+  font-size: 20px;
+  border: 1px solid #691d2f;
+  box-shadow: 0px 5px 0px rgb(122, 49, 66);
+}
+.start-screen button:hover {
+  box-shadow: none;
+  margin-top: 5px;
+}
 
 /* RULES POP UP */
 
@@ -275,7 +307,7 @@ padding: 0;
   cursor: default;
 }
 
-.modal-dialog > *, .modal-dialog .score-info {
+.modal-dialog > * {
   padding: 1rem;
   box-shadow: none;
 }
