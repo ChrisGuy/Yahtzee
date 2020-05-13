@@ -755,9 +755,18 @@ function gameOver() {
   console.log("End of Game!");
 
   if (globalScore0 > globalScore1){
+
+    DOM.icon[0].classList.remove("hidden");
+    DOM.icon[1].classList.remove("hidden");
+    DOM.icon[1].classList.add("hidden");
+    DOM.icon[0].innerHTML = "<i class='fas fa-trophy fa-2x'></i>";
     DOM.p0Name.textContent = "WINNER!";
 
   } else {
+    DOM.icon[0].classList.remove("hidden");
+    DOM.icon[1].classList.remove("hidden");
+    DOM.icon[0].classList.add("hidden");
+    DOM.icon[1].innerHTML = "<i class='fas fa-trophy fa-2x'></i>";
     DOM.p1Name("name-1").textContent = "WINNER!";
   }
 

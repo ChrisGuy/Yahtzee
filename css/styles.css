@@ -99,6 +99,10 @@ body {
   color: black;
 }
 
+.fa-trophy {
+  color: gold;
+}
+
 /* DICE STYLES */
 
 .dice {
@@ -178,14 +182,13 @@ button:focus {
 .btn-new {
   width: 150px;
   height: 60px;
-  font-size: 20px;
+  font-size: 15px;
   display: block;
-  margin: 30px auto;
+  margin: auto;
   text-transform: uppercase;
   position: absolute;
-  bottom: -18px;
-  left: 50%;
-  transform: translateX(-50%);
+  bottom: 0;
+  right: 10px;
 }
 
 .btn-score:not(.used):hover {
@@ -200,6 +203,20 @@ button:focus {
 .used:hover {
   font-weight: 300;
   cursor: not-allowed;
+}
+
+.btn-rules {
+  width: 150px;
+  height: 60px;
+  font-size: 15px;
+  display: block;
+  margin: auto;
+  background: none;
+  border: none;
+  text-transform: uppercase;
+  position: absolute;
+  left: 10px;
+  bottom: 0;
 }
 
 
@@ -227,8 +244,8 @@ button:focus {
 }
 
 .score-category {
-width: 100%;
-padding: 0;
+  width: 100%;
+  padding: 0;
 }
 
 /* START SCREEN */
@@ -284,28 +301,6 @@ padding: 0;
   opacity: 0;
   transition: all 0.35s ease-in;
   box-shadow: 0px 10px 50px rgba(194, 21, 47, 0.25);
-}
-
-.open-modal {
-  width: 80px;
-  height: 30px;
-  font-size: 15px;
-  display: block;
-  margin: 30px auto;
-  background: none;
-  border: none;
-  text-transform: uppercase;
-  position: absolute;
-}
-
-.rules {
-  bottom: -18px;
-  left: 10px;
-}
-
-.scores {
-  bottom: -18px;
-  right: 10px;
 }
 
 .modal.is-visible {
