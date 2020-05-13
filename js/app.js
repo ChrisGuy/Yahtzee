@@ -43,7 +43,7 @@ DOM.btnRoll.forEach(btnRoll => {
     console.log("roll button clicked");
     showDice();
     //check roll count
-    if (rollCount < 4) {
+    if (rollCount < 3) {
       diceRoll();
       for (let i = 1; i < dice.length; i++) {
         DOM.diceImg[i - 1].src = "./images/dice-" + dice[i] + ".png";
@@ -141,13 +141,19 @@ DOM.btnNew.addEventListener("click", function() {
    DOM.plPanel[0].classList.add("active");
    DOM.plPanel[1].classList.remove("active");
 
-   // Hide P2 (1) Roll button
+   // Display P1 (0) Roll Button & Hide P2 (1) Roll Button
+   DOM.btnRoll[0].classList.remove("hidden")
+   DOM.btnRoll[1].classList.remove("hidden")
    DOM.btnRoll[1].classList.add("hidden");
 
    // Disable p2 (1) scorecard at start
    DOM.scorecardBtns1.forEach(btn => {
      btn.disabled = true;
    });
+
+   // RESET PLAYER NAMES
+     document.getElementById("name-0").textContent = "Player 1";
+     document.getElementById("name-1").textContent = "Player 2!";
  };
 
 function hideDice() {
@@ -166,7 +172,7 @@ function showDice() {
   DOM.diceImg[4].classList.remove("hidden");
 }
 
-function hideRollBtns() {}
+function hideRollBtns() {};
 
 
 // Generates random numbers for the dice
@@ -183,7 +189,7 @@ function diceRoll() {
   // Increment roll count towards end of turn
   rollCount++;
   // return dice, rollCount;
-}
+};
 
 // Remove strikethrough on score card
 function removeUsed() {
@@ -213,6 +219,10 @@ function toggleActive() {
     // Remove "NO MORE ROLLS" message if displayed
     resetDiceTxt();
 
+    // Enable roll Button
+    DOM.btnRoll[0].disabled = false;
+    DOM.btnRoll[1].disabled = false;
+
     // Enable scorecard interaction for active player
     DOM.scorecardBtns1.forEach(btn => {
       btn.disabled = true;
@@ -238,7 +248,6 @@ function toggleActive() {
 
   // Update UI
   hideDice();
-  clearTempScores();
 
   // Resets the turns
   rollCount = 0;
@@ -281,7 +290,7 @@ function calcScore() {
         document.querySelector(".twosScore" + activePlayer).textContent = "0";
       };
     } else {
-      document.querySelector(".twoScore" + activePlayer).textContent = scores["p" + activePlayer][1];
+      document.querySelector(".twosScore" + activePlayer).textContent = scores["p" + activePlayer][1];
     }
   })(dice);
 
@@ -370,7 +379,6 @@ function calcScore() {
     }
     if (scores["p" + activePlayer][6].length < 1 ) {
       if (toak.length) {
-
         document.querySelector(".toakScore" + activePlayer).textContent = dice.reduce(reduce);
       } else {
         document.querySelector(".toakScore" + activePlayer).textContent = "0";
@@ -576,6 +584,9 @@ function saveScore(e) {
   // Update global score
   globalScore();
 
+  // Clear unsaved scores
+  clearTempScores();
+
   // Increment global turn counter
   globalCounter++;
   // Perform check to see if end of game
@@ -678,16 +689,16 @@ function clearTempScores() {
 
 function globalScore() {
 
+  // Total Player score
   globalScore0 = scores["p0"].reduce((a, b) => (a + Number(b)), 0);
   globalScore1 = scores["p1"].reduce((a, b) => (a + Number(b)), 0);
 
-  console.log(globalScore0);
-
+  // Update score display
   DOM.p0Score.innerHTML = "Score: " + globalScore0;
   DOM.p1Score.innerHTML = "Score: " + globalScore1;
 
   return globalScore0, globalScore1;
-}
+};
 
 function gameOver() {
   console.log("End of Game!");
@@ -701,10 +712,10 @@ function gameOver() {
 
   document.querySelector(".btn-roll-0").classList.add("hidden");
 
-}
+};
 
 
-// RULES
+// RULES POP UP
 
 const openEls = document.querySelectorAll("[data-open]");
 const closeEls = document.querySelectorAll("[data-close]");
