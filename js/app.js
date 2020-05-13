@@ -43,6 +43,9 @@ const diceSnd = new Audio("sounds/diceroll.mp3");
 // Cash register sound
 const scoreSnd = new Audio("sounds/score.mp3");
 
+// Fanfare sound
+const fanfareSnd = new Audio("sounds/fanfare.mp3");
+
 initGame();
 
 /*******************************************************
@@ -772,6 +775,9 @@ function globalScore() {
 function gameOver() {
   console.log("End of Game!");
 
+  // Play fanfare
+  fanfareSnd.play();
+
   if (globalScore0 > globalScore1){
 
     DOM.icon[0].classList.remove("hidden");
@@ -788,7 +794,8 @@ function gameOver() {
     DOM.p1Name("name-1").textContent = "WINNER!";
   }
 
-  document.querySelector(".btn-roll-0").classList.add("hidden");
+  DOM.btnRoll[0].classList.add("hidden");
+  DOM.btnRoll[1].classList.add("hidden");
 
 };
 
