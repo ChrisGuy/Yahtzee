@@ -7,6 +7,7 @@ DOM = {
   p1Score: document.querySelector(".player-1-score"), //Player 2 (1) global score
   p0Name: document.getElementById("name-0"),
   p1Name: document.getElementById("name-1"),
+  icon: document.querySelectorAll(".icon"),
 
   // Buttons
   btnRoll: document.querySelectorAll(".btn-roll"),  // Player Roll
@@ -181,6 +182,10 @@ DOM.start.addEventListener("click", function() {
    DOM.scorecardBtns1.forEach(btn => {
      btn.disabled = true;
    });
+
+   // Hide crowns
+   DOM.icon[0].classList.add("hidden");
+   DOM.icon[1].classList.add("hidden");
 
 
  };
@@ -721,6 +726,23 @@ function globalScore() {
   // Total Player score
   globalScore0 = scores["p0"].reduce((a, b) => (a + Number(b)), 0);
   globalScore1 = scores["p1"].reduce((a, b) => (a + Number(b)), 0);
+
+  if (globalScore0 > globalScore1){
+    DOM.icon[0].classList.remove("hidden");
+    DOM.icon[1].classList.remove("hidden");
+    DOM.icon[1].classList.add("hidden");
+    DOM.icon[0].innerHTML = "<i class='fas fa-crown fa-2x'></i>";
+  } else if (globalScore1 > globalScore0){
+    DOM.icon[1].classList.remove("hidden");
+    DOM.icon[0].classList.remove("hidden");
+    DOM.icon[0].classList.add("hidden");
+    DOM.icon[1].innerHTML = "<i class='fas fa-crown fa-2x'></i>";
+  } else {
+    DOM.icon[1].classList.remove("hidden");
+    DOM.icon[0].classList.remove("hidden");
+    DOM.icon[0].innerHTML = "<i class='fab fa-black-tie fa-2x'></i>"
+    DOM.icon[1].innerHTML = "<i class='fab fa-black-tie fa-2x'></i>"
+  }
 
   // Update score display
   DOM.p0Score.innerHTML = "Score: " + globalScore0;

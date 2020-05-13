@@ -85,6 +85,20 @@ body {
   text-align: center;
 }
 
+.icon {
+  display: block;
+  margin: auto;
+  text-align: center;
+}
+
+.fa-crown {
+  color: gold;
+}
+
+.fa-tie {
+  color: black;
+}
+
 /* DICE STYLES */
 
 .dice {
@@ -216,6 +230,8 @@ button:focus {
 width: 100%;
 padding: 0;
 }
+
+/* START SCREEN */
 
 .start-screen {
   position: absolute;
