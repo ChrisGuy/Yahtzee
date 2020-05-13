@@ -35,7 +35,13 @@ DOM = {
   lsScore: document.querySelectorAll(".lsScore"),
   yahtzeeScore: document.querySelectorAll(".yahtzeeScore"),
   chanceScore: document.querySelectorAll(".chanceScore")
-}
+};
+
+// Dice roll sound
+const diceSnd = new Audio("sounds/diceroll.mp3");
+
+// Cash register sound
+const scoreSnd = new Audio("sounds/score.mp3");
 
 initGame();
 
@@ -191,8 +197,8 @@ DOM.start.addEventListener("click", function() {
    });
 
    // Hide crowns
-   DOM.icon[0].classList.add("hidden");
-   DOM.icon[1].classList.add("hidden");
+   DOM.icon[0].innerHTML = "<i class='fas fa-chess-pawn fa-2x'></i>";
+   DOM.icon[1].innerHTML = "<i class='fas fa-chess-pawn fa-2x'></i>";
 
 
  };
@@ -218,6 +224,8 @@ function hideRollBtns() {};
 
 // Generates random numbers for the dice
 function diceRoll() {
+
+  diceSnd.play();
 
   for (let i = 1; i < 6; i++) {
     // Identifies "held" dice and skips the roll on them
@@ -602,7 +610,10 @@ function calcScore() {
 }
 
 function saveScore(e) {
-  //
+  //Play score sound
+  scoreSnd.play();
+
+
   const str = e.target.name;
   console.log(str);
   // Remove first number to identify location to post to in score array
