@@ -236,12 +236,16 @@ function toggleActive() {
     });
   };
 
-
+  // Update UI
+  hideDice();
+  clearTempScores();
 
   // Resets the turns
   rollCount = 0;
   // Reset Dice
   removeActiveDice();
+
+  return rollCount, activePlayer
 
 };
 
@@ -255,84 +259,85 @@ function calcScore() {
   // ONES
   (function ones(dice) {
     let onesScore = dice.filter(num => num === 1);
-    if (scores["p" + activePlayer][0].length == 0) {
+    if (scores["p" + activePlayer][0].length  < 1) {
       if (onesScore.length > 0) {
-         DOM.onesScore[activePlayer].textContent = onesScore.reduce(reduce);
+         document.querySelector(".onesScore" + activePlayer).textContent = onesScore.reduce(reduce);
       } else {
-        DOM.onesScore[activePlayer].textContent = "0";
+        document.querySelector(".onesScore" + activePlayer).textContent = "0";
       };
     } else {
-      DOM.onesScore[activePlayer].textContent = scores["p" + activePlayer][0];
+      document.querySelector(".onesScore" + activePlayer).textContent = scores["p" + activePlayer][0];
     }
+
   })(dice);
 
   // TWOS
   (function twos(dice) {
     let twosScore = dice.filter(num => num === 2);
-    if (scores["p" + activePlayer][1].length == 0 ) {
+    if (scores["p" + activePlayer][1].length  < 1 ) {
       if (twosScore.length > 0) {
-        DOM.twosScore[activePlayer].textContent = twosScore.reduce(reduce);
+        document.querySelector(".twosScore" + activePlayer).textContent = twosScore.reduce(reduce);
       } else {
-        DOM.twosScore[activePlayer].textContent = "0";
+        document.querySelector(".twosScore" + activePlayer).textContent = "0";
       };
     } else {
-      DOM.twosScore[activePlayer].textContent = scores["p" + activePlayer][1];
+      document.querySelector(".twoScore" + activePlayer).textContent = scores["p" + activePlayer][1];
     }
   })(dice);
 
   // THREES
   (function threes(dice) {
     let threesScore = dice.filter(num => num === 3);
-    if (scores["p" + activePlayer][2].length == 0 ) {
+    if (scores["p" + activePlayer][2].length  < 1 ) {
       if (threesScore.length > 0) {
-        DOM.threesScore[activePlayer].textContent = threesScore.reduce(reduce);
+        document.querySelector(".threesScore" + activePlayer).textContent = threesScore.reduce(reduce);
       } else {
-        DOM.threesScore[activePlayer].textContent = "0";
+        document.querySelector(".threesScore" + activePlayer).textContent = "0";
       };
     } else {
-      DOM.threesScore[activePlayer].textContent = scores["p" + activePlayer][2];
+      document.querySelector(".threesScore" + activePlayer).textContent = scores["p" + activePlayer][2];
     }
   })(dice);
 
   // FOURS
   (function fours(dice) {
     let foursScore = dice.filter(num => num === 4);
-    if (scores["p" + activePlayer][3].length == 0 ) {
+    if (scores["p" + activePlayer][3].length < 1 ) {
       if (foursScore.length > 0) {
-        DOM.foursScore[activePlayer].textContent = foursScore.reduce(reduce);
+        document.querySelector(".foursScore" + activePlayer).textContent = foursScore.reduce(reduce);
       } else {
-        DOM.foursScore[activePlayer].textContent = "0";
+        document.querySelector(".foursScore" + activePlayer).textContent = "0";
       };
     } else {
-      DOM.foursScore[activePlayer].textContent = scores["p" + activePlayer][3];
+      document.querySelector(".foursScore" + activePlayer).textContent = scores["p" + activePlayer][3];
     }
   })(dice);
 
   // FIVES
   (function fives(dice) {
     let fivesScore = dice.filter(num => num === 5);
-    if (scores["p" + activePlayer][4].length == 0) {
+    if (scores["p" + activePlayer][4].length < 1) {
       if (fivesScore.length > 0) {
-        DOM.fivesScore[activePlayer].textContent = fivesScore.reduce(reduce);
+        document.querySelector(".fivesScore" + activePlayer).textContent = fivesScore.reduce(reduce);
       } else {
-        DOM.fivesScore[activePlayer].textContent = "0";
+        document.querySelector(".fivesScore" + activePlayer).textContent = "0";
       };
     } else {
-      DOM.fivesScore[activePlayer].textContent = scores["p" + activePlayer][4];
+      document.querySelector(".fivesScore" + activePlayer).textContent = scores["p" + activePlayer][4];
     }
   })(dice);
 
   // SIXES
   (function sixes(dice) {
     let sixesScore = dice.filter(num => num === 6);
-    if (scores["p" + activePlayer][5].length == 0 ) {
+    if (scores["p" + activePlayer][5].length < 1 ) {
       if (sixesScore.length > 0) {
-        DOM.sixesScore[activePlayer].textContent = sixesScore.reduce(reduce);
+        document.querySelector(".sixesScore" + activePlayer).textContent = sixesScore.reduce(reduce);
       } else {
-        DOM.sixesScore[activePlayer].textContent = "0";
+        document.querySelector(".sixesScore" + activePlayer).textContent = "0";
       };
     } else {
-      DOM.sixesScore[activePlayer].textContent = scores["p" + activePlayer][5];
+      document.querySelector(".sixesScore" + activePlayer).textContent = scores["p" + activePlayer][5];
     }
   })(dice);
 
@@ -363,12 +368,12 @@ function calcScore() {
         toak.push(a);
       }
     }
-    if (scores["p" + activePlayer][6].length == 0 ) {
+    if (scores["p" + activePlayer][6].length < 1 ) {
       if (toak.length) {
 
-        DOM.toakScore[activePlayer].textContent = dice.reduce(reduce);
+        document.querySelector(".toakScore" + activePlayer).textContent = dice.reduce(reduce);
       } else {
-        DOM.toakScore[activePlayer].textContent = "0";
+        document.querySelector(".toakScore" + activePlayer).textContent = "0";
       }
     }
 
@@ -401,12 +406,12 @@ function calcScore() {
         foak.push(a);
       }
     }
-    if (scores["p" + activePlayer][7].length == 0 ) {
+    if (scores["p" + activePlayer][7].length  < 1 ) {
       if (foak.length) {
 
-        DOM.foakScore[activePlayer].textContent = dice.reduce(reduce);
+        document.querySelector(".foakScore" + activePlayer).textContent = dice.reduce(reduce);
       } else {
-        DOM.foakScore[activePlayer].textContent = "0";
+        document.querySelector(".foakScore" + activePlayer).textContent = "0";
       }
     }
 
@@ -439,17 +444,17 @@ function calcScore() {
         fullhouse.push(a);
       }
     }
-    if (scores["p" + activePlayer][8].length === 0 ) {
+    if (scores["p" + activePlayer][8].length  < 1 ) {
       if (fullhouse.length == 2) {
         if (fullhouse[0].count == "2" && fullhouse[1].count == "3" || fullhouse[0].count == "3" && fullhouse[1].count == "2") {
 
-          DOM.fullhouseScore[activePlayer].textContent = "25";
+          document.querySelector(".fullhouseScore" + activePlayer).textContent = "25";
         } else {
-          DOM.fullhouseScore[activePlayer].textContent = "0";
+          document.querySelector(".fullhouseScore" + activePlayer).textContent = "0";
         }
       }
     } else {
-        DOM.fullhouseScore[activePlayer].textContent = scores["p" + activePlayer][8];
+        document.querySelector(".fullhouseScore" + activePlayer).textContent = scores["p" + activePlayer][8];
     }
   })(dice);
 
@@ -460,14 +465,14 @@ function calcScore() {
 
     copy = copy.sort();
 
-    if (scores["p" + activePlayer][9].length == 0){
+    if (scores["p" + activePlayer][9].length < 1){
       if (/1234|2345|3456/.test(copy.join("").replace(/(.)\1/, "$1"))) {
-          DOM.ssScore[activePlayer].textContent = "30";
+          document.querySelector(".ssScore" + activePlayer).textContent = "30";
       } else {
-         DOM.ssScore[activePlayer].textContent = "0";
+         document.querySelector(".ssScore" + activePlayer).textContent = "0";
       };
     } else {
-      DOM.ssScore[activePlayer].textContent = scores["p" + activePlayer][9];
+      document.querySelector(".ssScore" + activePlayer).textContent = scores["p" + activePlayer][9];
     };
   })(dice);
 
@@ -478,14 +483,14 @@ function calcScore() {
 
     copy = copy.sort();
 
-    if (scores["p" + activePlayer][10].length == 0){
+    if (scores["p" + activePlayer][10].length  < 1){
       if (/12345|23456/.test(copy.join("").replace(/(.)\1/, "$1"))) {
-          DOM.lsScore[activePlayer].textContent = "40";
+          document.querySelector(".lsScore" + activePlayer).textContent = "40";
       } else {
-          DOM.lsScore[activePlayer].textContent = "0";
+          document.querySelector(".lsScore" + activePlayer).textContent = "0";
       };
     } else {
-      DOM.lsScore[activePlayer].textContent = scores["p" + activePlayer][10];
+      document.querySelector(".lsScore" + activePlayer).textContent = scores["p" + activePlayer][10];
     };
   })(dice);
 
@@ -518,25 +523,26 @@ function calcScore() {
         yahtzee.push(a);
       }
     }
-    if (scores["p" + activePlayer][11].length == 0 ) {
+    if (scores["p" + activePlayer][11].length  < 1) {
       if (yahtzee.length) {
 
-        DOM.yahtzeeScore[activePlayer].textContent = "50";
+        document.querySelector(".yahtzeeScore" + activePlayer).textContent = "50";
       } else {
-        DOM.yahtzeeScore[activePlayer].textContent = "0";
+        document.querySelector(".yahtzeeScore" + activePlayer).textContent = "0";
       }
     } else {
-        DOM.yahtzeeScore[activePlayer].textContent = scores["p" + activePlayer][11];
+        document.querySelector(".yahtzeeScore" + activePlayer).textContent = scores["p" + activePlayer][11];
       }
   })(dice);
 
 
   // CHANCE
   (function chance(dice) {
-    if (scores["p" + activePlayer][12].length == 0) {
-      DOM.chanceScore[activePlayer].textContent = dice.reduce(reduce);
+    if (scores["p" + activePlayer][12].length < 1) {
+        console.log("Empty");
+        document.querySelector(".chanceScore" + activePlayer).textContent = dice.reduce(reduce);
     } else {
-      DOM.chanceScore[activePlayer].textContent = scores["p" + activePlayer][12];
+      document.querySelector(".chanceScore" + activePlayer).textContent = scores["p" + activePlayer][12];
     };
   })(dice);
 
@@ -549,21 +555,23 @@ function calcScore() {
 function saveScore(e) {
   //
   const str = e.target.name;
+  console.log(str);
   // Remove first number to identify location to post to in score array
   const targetNum = str.substring(1, str.length);
+  console.log(targetNum);
+
+  const player = str.substring(0, 1);
   // score type classname
   const target = e.target.nextElementSibling.classList[1];
+  console.log(target);
 
   // Set score to text content in next element
   score = document.querySelector("." + target).textContent;
+  console.log(score);
   // Apply score to score array - Parse int first
-  scores["p" + activePlayer][targetNum] = parseInt(score);
+  scores["p" + player][targetNum] = parseInt(score);
   // Add strikethrough class to button text
   e.target.classList.add("used");
-
-  // Update UI
-  hideDice();
-  clearTempScores();
 
   // Update global score
   globalScore();
@@ -627,44 +635,44 @@ function clearTempScores() {
     //   if (scores["p" + activePlayer][i] === "") {
     //   document.getElementById(label + activePlayer).textContent = "0";
     // };
-  if (scores["p" + activePlayer][0].length === 0) {
-    DOM.onesScore[activePlayer].textContent = "0";
+  if (scores["p" + activePlayer][0].length < 1) {
+    document.querySelector(".onesScore" + activePlayer).textContent = "0";
   };
-  if (scores["p" + activePlayer][1].length === 0) {
-    DOM.twosScore[activePlayer].textContent = "0";
+  if (scores["p" + activePlayer][1].length < 1) {
+    document.querySelector(".twosScore" + activePlayer).textContent = "0";
   };
-  if (scores["p" + activePlayer][2].length === 0) {
-    DOM.threesScore[activePlayer].textContent = "0";
+  if (scores["p" + activePlayer][2].length < 1) {
+    document.querySelector(".threesScore" + activePlayer).textContent = "0";
   };
-  if (scores["p" + activePlayer][3].length === 0) {
-    DOM.foursScore[activePlayer].textContent = "0";
+  if (scores["p" + activePlayer][3].length < 1) {
+    document.querySelector(".foursScore" + activePlayer).textContent = "0";
   };
-  if (scores["p" + activePlayer][4].length === 0) {
-    DOM.fivesScore[activePlayer].textContent = "0";
+  if (scores["p" + activePlayer][4].length < 1) {
+    document.querySelector(".fivesScore" + activePlayer).textContent = "0";
   };
-  if (scores["p" + activePlayer][5].length === 0) {
-    DOM.sixesScore[activePlayer].textContent = "0";
+  if (scores["p" + activePlayer][5].length < 1) {
+    document.querySelector(".sixesScore" + activePlayer).textContent = "0";
   };
-  if (scores["p" + activePlayer][6].length === 0) {
-    DOM.toakScore[activePlayer].textContent = "0";
+  if (scores["p" + activePlayer][6].length < 1) {
+    document.querySelector(".toakScore" + activePlayer).textContent = "0";
   };
-  if (scores["p" + activePlayer][7].length === 0) {
-    DOM.foakScore[activePlayer].textContent = "0";
+  if (scores["p" + activePlayer][7].length < 1) {
+    document.querySelector(".foakScore" + activePlayer).textContent = "0";
   };
-  if (scores["p" + activePlayer][8].length === 0) {
-    DOM.fullhouseScore[activePlayer].textContent = "0";
+  if (scores["p" + activePlayer][8].length < 1) {
+    document.querySelector(".fullhouseScore" + activePlayer).textContent = "0";
   };
-  if (scores["p" + activePlayer][9].length === 0) {
-    DOM.ssScore[activePlayer].textContent = "0";
+  if (scores["p" + activePlayer][9].length < 1) {
+    document.querySelector(".ssScore" + activePlayer).textContent = "0";
   };
-  if (scores["p" + activePlayer][10].length === 0) {
-    DOM.lsScore[activePlayer].textContent = "0";
+  if (scores["p" + activePlayer][10].length < 1) {
+    document.querySelector(".lsScore" + activePlayer).textContent = "0";
   };
-  if (scores["p" + activePlayer][11].length === 0) {
-    DOM.yahtzeeScore[activePlayer].textContent = "0";
+  if (scores["p" + activePlayer][11].length < 1) {
+    document.querySelector(".yahtzeeScore" + activePlayer).textContent = "0";
   };
-  if (scores["p" + activePlayer][12].length === 0) {
-    DOM.chanceScore[activePlayer].textContent = "0";
+  if (scores["p" + activePlayer][12].length < 1) {
+    document.querySelector(".chanceScore" + activePlayer).textContent = "0";
   };
 }
 
