@@ -259,16 +259,20 @@ button:focus {
   height: 500px;
   background-color: #691d2f;
   color: #fff;
-  padding: 100px;
+  padding: 80px;
 }
 
 .start-screen input[type=text] {
   display: block;
   margin: 50px auto;
-  width: 600px;
+  width: 640px;
   height: 50px;
   font-size: 20px;
   padding: 10px;
+}
+
+.start-screen form {
+  margin: 20px 0;
 }
 
 .start-screen button {

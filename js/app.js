@@ -115,8 +115,7 @@ DOM.start.addEventListener("click", function() {
    // Open Player name screen
    document.getElementById("start").classList.remove("hidden");
 
-   // Sets P1 (0) as starting player
-   activePlayer = 0;
+
    // Reset scores
    scores = {
      p0: [
@@ -165,7 +164,15 @@ DOM.start.addEventListener("click", function() {
    hideDice();
    removeUsed();
    removeActiveDice();
+
+   // Clears both scores
+   activePlayer = 1;
    clearTempScores();
+   // Sets P1 (0) as starting player
+   activePlayer = 0;
+   clearTempScores();
+
+
    globalScore();
 
    // Reset the active player to P1 (0)
@@ -773,6 +780,13 @@ function gameOver() {
   document.querySelector(".btn-roll-0").classList.add("hidden");
 
 };
+
+(function copyright() {
+  let date = new Date();
+  let year = date.getFullYear();
+
+  document.querySelector(".copyright").innerHTML = "Copyright " + year + " Chris Morgan";
+})();
 
 
 // RULES POP UP
