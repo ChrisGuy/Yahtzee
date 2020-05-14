@@ -64,20 +64,33 @@ body {
 
 /* ACTIVE STYLES */
 
-.active { background-color: #f7f7f7; }
+.active {
+  background-color: #f7f7f7;
+}
+
+.active .player-name {
+  font-weight: 400;
+}
 
 .active .player-name::after {
-    content: "\2666";
-    font-size: 24px;
-    position: absolute;
-    color: #ff5c5c;
-    right: 10px;
-  }
+  content: "\2666";
+  font-size: 24px;
+  position: absolute;
+  color: #ff5c5c;
+  right: 10px;
+}
+.active .player-name::before {
+  content: "\2666";
+  font-size: 24px;
+  position: absolute;
+  color: #ff5c5c;
+  left: 10px;
+}
 
-  .active-dice {
+.active-dice {
   border: 2px solid #ff5c5c;
   border-radius: 5px;
-  }
+}
 
 /* PLAYER INFO */
 
@@ -107,21 +120,20 @@ body {
   display: flex;
   flex-direction: column;
   color: #ff5c5c;
-  font-size: 60px;
   position: absolute;
-  top: 40px;
+  top: 193px;
 }
 
 .turns-0 {
-  left: 60px;
+  left: 115px;
 }
 
 .turns-1{
-  right: 60px;
+  right: 115px;
 }
 
 .roll-num {
-  height: 45px;
+  height: 25px;
 }
 
 /* DICE STYLES */
@@ -301,11 +313,18 @@ button:focus {
   height: 50px;
   font-size: 20px;
   border: 1px solid #691d2f;
-  box-shadow: 0px 5px 0px rgb(122, 49, 66);
+  box-shadow: 5px 5px 0px rgb(122, 49, 66), 4px 4px 0px rgb(122, 49, 66), 3px 3px 0px rgb(122, 49, 66), 2px 2px 0px rgb(122, 49, 66), 1px 1px 0px rgb(122, 49, 66);
 }
 .start-screen button:hover {
   box-shadow: none;
-  margin-top: 5px;
+  margin: 5px 0px 0 5px;
+
+}
+
+.copyright {
+  position: absolute;
+  right: 80px;
+  bottom: 70px;
 }
 
 /* RULES POP UP */

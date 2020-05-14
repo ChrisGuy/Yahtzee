@@ -668,42 +668,42 @@ function calcScore(activePlayer) {
 
 function saveScore(e) {
   //Play score sound
-  scoreSnd.play();
+    scoreSnd.play();
 
-  console.log(activePlayer);
-  const str = e.target.name;
-  console.log(str);
-  // Remove first number to identify location to post to in score array
-  const targetNum = str.substring(1, str.length);
-  console.log(targetNum);
+    console.log(activePlayer);
+    const str = e.target.name;
+    console.log(str);
+    // Remove first number to identify location to post to in score array
+    const targetNum = str.substring(1, str.length);
+    console.log(targetNum);
 
-  // score type classname
-  const target = e.target.nextElementSibling.classList[1];
-  console.log(target);
+    // score type classname
+    const target = e.target.nextElementSibling.classList[1];
+    console.log(target);
 
-  // Set score to text content in next element
-  score = document.querySelectorAll("." + target)[activePlayer].textContent;
-  // Apply score to score array - Parse int first
-  scores[activePlayer][targetNum] = parseInt(score);
-  console.log(scores[activePlayer][targetNum]);
-  // Add strikethrough class to button text
-  e.target.classList.add("used");
+    // Set score to text content in next element
+    score = document.querySelectorAll("." + target)[activePlayer].textContent;
+    // Apply score to score array - Parse int first
+    scores[activePlayer][targetNum] = parseInt(score);
+    console.log(scores[activePlayer][targetNum]);
+    // Add strikethrough class to button text
+    e.target.classList.add("used");
+    console.log(e);
+    // Update global score
+    globalScore();
 
-  // Update global score
-  globalScore();
+    // Clear unsaved scores
+    clearTempScores(activePlayer);
 
-  // Clear unsaved scores
-  clearTempScores(activePlayer);
-
-  // Increment global turn counter
-  globalCounter++;
-  // Perform check to see if end of game
-  if (globalCounter === 26) {
-    gameOver();
-  }
+    // Increment global turn counter
+    globalCounter++;
+    // Perform check to see if end of game
+    if (globalCounter === 26) {
+      gameOver();
+    }
 
 
-  toggleActive();
+    toggleActive();
 };
 
 // Clear temporary scores from player card at end of return
