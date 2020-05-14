@@ -233,6 +233,15 @@ function showTurnIndicator(activePlayer) {
   });
 }
 
+function hideTurnIndicator() {
+  DOM.rollNumP0.forEach((item) => {
+    item.classList.add("hidden");
+  });
+  DOM.rollNumP1.forEach((item) => {
+    item.classList.add("hidden");
+  });
+}
+
 function hideRollBtns() {};
 
 
@@ -302,7 +311,7 @@ function toggleActive() {
   DOM.plPanel[0].classList.toggle("active");
   DOM.plPanel[1].classList.toggle("active");
 
-  if (activePlayer == 0) {
+  if (activePlayer === 0) {
     // Hide/reveal Roll Btn
     DOM.btnRoll[1].classList.add("hidden");
     DOM.btnRoll[0].classList.remove("hidden");
@@ -341,7 +350,8 @@ function toggleActive() {
   hideDice();
 
   // Show turn indicator for active player
-showTurnIndicator(activePlayer);
+  hideTurnIndicator();
+  showTurnIndicator(activePlayer);
 
 
 
@@ -665,7 +675,6 @@ function saveScore(e) {
   console.log(str);
   // Remove first number to identify location to post to in score array
   const targetNum = str.substring(1, str.length);
-  const player = str.substring(0, 1);
   console.log(targetNum);
 
   // score type classname
@@ -675,7 +684,7 @@ function saveScore(e) {
   // Set score to text content in next element
   score = document.querySelectorAll("." + target)[activePlayer].textContent;
   // Apply score to score array - Parse int first
-  scores[player][targetNum] = parseInt(score);
+  scores[activePlayer][targetNum] = parseInt(score);
   console.log(scores[activePlayer][targetNum]);
   // Add strikethrough class to button text
   e.target.classList.add("used");
