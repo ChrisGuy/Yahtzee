@@ -8,6 +8,8 @@ DOM = {
   p0Name: document.getElementById("name-0"),
   p1Name: document.getElementById("name-1"),
   icon: document.querySelectorAll(".icon"),
+  rollNumP0: document.querySelectorAll(".roll-num0"),
+  rollNumP1: document.querySelectorAll(".roll-num1"),
 
   // Buttons
   btnRoll: document.querySelectorAll(".btn-roll"),  // Player Roll
@@ -56,20 +58,16 @@ DOM.btnRoll.forEach(btnRoll => {
   btnRoll.addEventListener("click", function() {
     console.log("roll button clicked");
     showDice();
-    //check roll count
+
     if (rollCount < 3) {
+
       diceRoll();
       for (let i = 1; i < dice.length; i++) {
         DOM.diceImg[i - 1].src = "./images/dice-" + dice[i] + ".png";
       }
       calcScore();
-    } else {
-      DOM.btnRoll[activePlayer].disabled = true;
-      DOM.btnRoll[activePlayer].textContent = "No more rolls";
-      calcScore();
-      rollCount = 0;
-    }
-  })
+  }
+});
 });
 
 DOM.btnScore.forEach(scoreBtn => {
@@ -240,8 +238,41 @@ function diceRoll() {
   }
   // Increment roll count towards end of turn
   rollCount++;
-  // return dice, rollCount;
+  rollNum();
+
+
+  if (rollCount === 3) {
+    DOM.btnRoll[activePlayer].disabled = true;
+    DOM.btnRoll[activePlayer].textContent = "No more rolls";
+    calcScore();
+    rollCount = 0;
+  }
+
 };
+
+function rollNum() {
+  let rollNum;
+  if (activePlayer === 0) {
+    rollNum = DOM.rollNumP0;
+  } else {
+    rollNum = DOM.rollNumP1;
+  };
+
+  switch(rollCount) {
+    case 1:
+      rollNum[0].classList.add("hidden");
+      break;
+    case 2:
+      rollNum[0].classList.add("hidden");
+      rollNum[1].classList.add("hidden");
+      break;
+    case 3:
+      rollNum[0].classList.add("hidden");
+      rollNum[1].classList.add("hidden");
+      rollNum[2].classList.add("hidden");
+      break;
+  }
+}
 
 // Remove strikethrough on score card
 function removeUsed() {

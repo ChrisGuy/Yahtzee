@@ -103,6 +103,27 @@ body {
   color: gold;
 }
 
+.turns {
+  display: flex;
+  flex-direction: column;
+  color: #ff5c5c;
+  font-size: 60px;
+  position: absolute;
+  top: 40px;
+}
+
+.turns-0 {
+  left: 60px;
+}
+
+.turns-1{
+  right: 60px;
+}
+
+.roll-num {
+  height: 45px;
+}
+
 /* DICE STYLES */
 
 .dice {
