@@ -171,10 +171,17 @@ DOM.start.addEventListener("click", function() {
    hideDice();
    removeUsed();
    removeActiveDice();
+   showTurnIndicator();
+
+
 
    // Clears both scores
    activePlayer = 1;
    clearTempScores();
+   //hides p2 (1) turn indicator for start
+   DOM.rollNumP1.forEach((item) => {
+     item.classList.add("hidden");
+   });
    // Sets P1 (0) as starting player
    activePlayer = 0;
    clearTempScores();
@@ -220,6 +227,13 @@ function showDice() {
   DOM.diceImg[4].classList.remove("hidden");
 }
 
+function showTurnIndicator(activePlayer) {
+  let rollNum = activePlayer === 0 ? DOM.rollNumP0 : DOM.rollNumP1 ;
+  rollNum.forEach((item) => {
+    item.classList.remove("hidden");
+  });
+}
+
 function hideRollBtns() {};
 
 
@@ -251,12 +265,7 @@ function diceRoll() {
 };
 
 function rollNum() {
-  let rollNum;
-  if (activePlayer === 0) {
-    rollNum = DOM.rollNumP0;
-  } else {
-    rollNum = DOM.rollNumP1;
-  };
+  let rollNum = activePlayer === 0 ? DOM.rollNumP0 : DOM.rollNumP1;
 
   switch(rollCount) {
     case 1:
@@ -331,6 +340,11 @@ function toggleActive() {
 
   // Update UI
   hideDice();
+
+  // Show turn indicator for active player
+showTurnIndicator(activePlayer);
+
+
 
   // Resets the turns
   rollCount = 0;
